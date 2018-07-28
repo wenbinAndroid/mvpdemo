@@ -2,4 +2,6 @@
 
 #### 介绍
 
-##### 由于项目
+##### 由于项目中经常有列表的界面,所以我将列表页面和普通页面分开来
+[]{https://github.com/wenbinAndroid/mvpdemo/blob/master/image/89D2AAE3-E292-4EC8-95C7-38CF635C066F.png}
+
