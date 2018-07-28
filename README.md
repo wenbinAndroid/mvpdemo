@@ -84,6 +84,7 @@ public interface IPresenter<V> extends LifecycleObserver {
 }
 
 //主要提供一个中间人的工作,防止view和model直接接触,逻辑也是放在P层中处理即可
+
 public abstract class BasePresenter<T extends IModel, V extends IView>
         implements IPresenter<V> {
     //model
