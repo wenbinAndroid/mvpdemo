@@ -83,6 +83,7 @@ public interface IPresenter<V> extends LifecycleObserver {
     void detachView();
 }
 
+
 public abstract class BasePresenter<T extends IModel, V extends IView>
         implements IPresenter<V> {
     //model
@@ -105,11 +106,13 @@ public abstract class BasePresenter<T extends IModel, V extends IView>
 
         return mView;
 }
+
   protected T getModel() {
         if (mModel == null)
             throw new IllegalStateException("model must be not null");
         return mModel;
     }
+    
     //页面销毁回调
     @Override
     public void detachView() {
