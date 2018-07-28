@@ -86,6 +86,7 @@ public abstract class BasePresenter<T extends IModel, V extends IView>
         implements IPresenter<V> {
     //model
     private T mModel;
+    //view
     private V mView;
     private static final String TAG = "BasePresenter";
 
