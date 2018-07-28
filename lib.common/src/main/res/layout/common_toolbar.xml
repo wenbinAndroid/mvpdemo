@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                   xmlns:tools="http://schemas.android.com/tools"
+                                   android:id="@+id/toolbar"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="@dimen/dp_44"
+                                   android:background="@color/colorPrimary"
+                                   app:contentInsetLeft="0dp"
+                                   app:contentInsetStart="0dp"
+                                   app:theme="@style/ActionBarTheme"
+                                   app:titleTextAppearance="@style/Toolbar.TitleText">
+
+    <TextView
+        android:id="@+id/tv_toolbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_19"
+        tools:text="标题"/>
+</android.support.v7.widget.Toolbar>

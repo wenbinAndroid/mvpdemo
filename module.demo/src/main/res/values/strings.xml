@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">module.demo</string>
+    <string name="demo">Demo</string>
+    <string name="demo_list">DemoList</string>
+</resources>

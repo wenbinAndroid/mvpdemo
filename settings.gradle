@@ -1,0 +1,1 @@
+include ':app',':lib.common',':lib.utils', ':module.demo'
