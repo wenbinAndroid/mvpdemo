@@ -129,7 +129,9 @@ public abstract class BasePresenter<T extends IModel, V extends IView>
 
 ### 使用方法  
 
-#### 使用[MVP插件](https://github.com/longforus/MvpAutoCodePlus)可以快速生成结构,这是我的配置信息![配置](https://github.com/wenbinAndroid/mvpdemo/blob/master/image/B1544D6F-A5A4-45BB-831E-093FC4617848.png)
+#### 使用[MVP插件](https://github.com/longforus/MvpAutoCodePlus)可以快速生成结构,这是我的配置信息
+
+![配置](https://github.com/wenbinAndroid/mvpdemo/blob/master/image/B1544D6F-A5A4-45BB-831E-093FC4617848.png)
 
 
 #### 普通的视图界面
@@ -161,7 +163,7 @@ public class DemoActivity extends BaseActivity<DemoPresenter> implements IDemoCo
 ```
 
 #### 普通的列表页面,设置数据只要调用setDataList方法,其余的列表空数据界面,错误界面,错误界面重新加载都进行了相应的封装,不需要写太多的代码,都在内部进行了判断
-
+```java
 public class DemoListActivity extends BaseListActivity<DemoPresenter, DemoAdapter> implements IDemoContract.View {
 
 
