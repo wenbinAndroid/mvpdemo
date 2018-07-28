@@ -170,7 +170,7 @@ public abstract class BaseActivity<T extends IPresenter> extends
 
 ```
 
-#### 普通的列表页面,则相对要负责一点
+#### 普通的列表页面,则相对要复杂一点,判断和设置的东西多一点
 
 ```java
 public abstract class BaseListActivity<K extends IPresenter, V extends BaseQuickAdapter>
