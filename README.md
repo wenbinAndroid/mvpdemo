@@ -61,9 +61,9 @@ public interface BaseListView extends IView {
 #### P层结构
 
 ```java
-
+//使用Lifecycle来监测视图界面的生命周期并实现回调
 public interface IPresenter<V> extends LifecycleObserver {
-    //使用Lifecycle来监测视图界面的生命周期并实现回调
+   
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     void onCreate();
 
@@ -83,7 +83,7 @@ public interface IPresenter<V> extends LifecycleObserver {
     void detachView();
 }
 
-
+//主要提供一个中间人的工作,防止view和model直接接触,逻辑也是放在P层中处理即可
 public abstract class BasePresenter<T extends IModel, V extends IView>
         implements IPresenter<V> {
     //model
@@ -126,7 +126,7 @@ public abstract class BasePresenter<T extends IModel, V extends IView>
     }
 ```
 
-#### BaseActivity
+#### 普通的视图界面
 ```java
 public abstract class BaseActivity<T extends IPresenter> extends
         SisoActivity {
@@ -160,7 +160,7 @@ public abstract class BaseActivity<T extends IPresenter> extends
     protected void setLifecycleRegistry() {
         mPresenter = createPresenter();
         if (mPresenter != null) {
-        //回调生命周期到presenter
+        //注册生命周期的监听
             getLifecycle().addObserver(mPresenter);
         }
     }
@@ -168,6 +168,204 @@ public abstract class BaseActivity<T extends IPresenter> extends
 }
 
 
+```
+
+#### 普通的列表页面,则相对要负责一点
+
+```java
+public abstract class BaseListActivity<K extends IPresenter, V extends BaseQuickAdapter>
+        extends SisoActivity implements BaseListView, BaseQuickAdapter.OnItemChildClickListener,
+        BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.RequestLoadMoreListener {
+    protected V mAdapter;
+    protected K mPresenter;
+    protected RecyclerView mRv;
+    //分页加载大小
+    protected int pagerSize = Config.PAGER_SIZE;
+    //是否显示列表尾部的没有更多数据样式
+    protected boolean isHideListFooter = false;
+    //打开加载更多
+    protected boolean isOpenLoadMore = true;
+    //是否显示重新加载视图
+    protected boolean isOpenErrorView = true;
+    //是否显示加载错误的信息提示
+    protected boolean isShowLoadingErrorText = true;
+    //是否开启默认列表动画
+    protected boolean isOpenDefaultAnmation = true;
+
+    @Override
+    protected void initToolbar() {
+        setToolbar();
+    }
+
+    @Override
+    protected int setLayout() {
+        return onLayout();
+    }
+
+    @Override
+    protected void init() {
+        initView();
+        initAdapter();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getData();
+    }
+
+    public abstract int onLayout();
+
+    public abstract void initView();
+
+    public abstract void setToolbar();
+    //如果使用列表必须有返回值
+    public abstract V getAdapter();
+    //如果使用列表必须有返回值
+    public abstract K getPresenter();
+    //如果使用列表必须有返回值
+    public abstract RecyclerView getRecycler();
+    //用于下拉刷新view的状态改变
+    public abstract void setRefreshState();
+    //用于获取数据,加载更多和错误重新加载也是调用此接口
+    public abstract void getData();
+
+    protected void initAdapter() {
+        if (getAdapter() != null && getRecycler() != null) {
+            mRv = getRecycler();
+            mAdapter = getAdapter();
+            openDefaultAnimation();
+            mRv.setAdapter(mAdapter);
+            mAdapter.setOnItemChildClickListener(this);
+            mAdapter.setOnItemClickListener(this);
+            if (isOpenLoadMore) {
+                mAdapter.setOnLoadMoreListener(this, mRv);
+            }
+        }
+    }
+
+    /**
+     * 列表默认动画
+     */
+    protected void openDefaultAnimation() {
+        if (isOpenDefaultAnmation) {
+            mAdapter.isFirstOnly(false);
+            mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+        }
+    }
+
+    /**
+     * 设置数据
+     *
+     * @param data
+     */
+    @Override
+    public void setListData(List data) {
+        if (mCurrentPager == 1) {
+            setRefreshState();
+            if ((data == null || data.size() == 0)) {
+                showEmptyView();
+                return;
+            }
+            mAdapter.setNewData(data);
+            mCurrentPager = 1;
+            mNextPager = 2;
+        } else {
+            mAdapter.addData(data);
+            mAdapter.loadMoreComplete();
+            mNextPager++;
+        }
+        if (data.size() < pagerSize) {
+            mAdapter.loadMoreEnd(isHideListFooter);
+        }
+    }
+
+    /**
+     * 列表错误加载
+     *
+     * @param data
+     */
+    @Override
+    public void onErrorList(StatusError data) {
+        if (isShowLoadingErrorText) showToast(data.errText);
+        if (mCurrentPager > 1) {
+            mAdapter.loadMoreFail();
+        } else {
+            if (isOpenErrorView) showErrView();
+
+        }
+    }
+
+
+    /**
+     * 列表item元素点击
+     *
+     * @param adapter
+     * @param view
+     * @param position
+     */
+    @Override
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+
+    }
+
+    /**
+     * 列表item点击
+     *
+     * @param adapter
+     * @param view
+     * @param position
+     */
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+    }
+
+    /**
+     * 显示错误视图
+     */
+    protected void showErrView() {
+        mAdapter.setNewData(new ArrayList());
+        mAdapter.setEmptyView(getRvErrView(mRv));
+    }
+
+    /**
+     * 显示空视图
+     */
+    protected void showEmptyView() {
+        mAdapter.setNewData(new ArrayList());
+        mAdapter.setEmptyView(getRvEmptyView(mRv));
+    }
+
+    /**
+     * 加载更多
+     */
+    @Override
+    public void onLoadMoreRequested() {
+        mCurrentPager = mNextPager;
+        getData();
+    }
+
+    /**
+     * 注册生命观察者
+     */
+    @Override
+    protected void setLifecycleRegistry() {
+        mPresenter = getPresenter();
+        if (mPresenter != null) {
+            getLifecycle().addObserver(mPresenter);
+        }
+    }
+
+    /**
+     * 错误界面的重新加载
+     */
+    @Override
+    public void onRvErrLoading() {
+        super.onRvErrLoading();
+        getData();
+    }
+}
 ```
 
 
