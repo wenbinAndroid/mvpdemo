@@ -128,6 +128,9 @@ public abstract class BasePresenter<T extends IModel, V extends IView>
 
 ### 使用方法  
 
+#### 使用[MVP插件](https://github.com/longforus/MvpAutoCodePlus)可以快速生成结构,这是我的配置信息![配置](https://github.com/wenbinAndroid/mvpdemo/blob/master/image/B1544D6F-A5A4-45BB-831E-093FC4617848.png)
+
+
 #### 普通的视图界面
 ```java
 public class DemoActivity extends BaseActivity<DemoPresenter> implements IDemoContract.View {
@@ -211,6 +214,13 @@ public class DemoListActivity extends BaseListActivity<DemoPresenter, DemoAdapte
 }
 
 ```
+
+#### 注意事项
+1.如果在模块使用了Butterknife,则该模块也必须要配置参数,不能只在common中配置,不然会出现空指针的情况
+2.如果要调用model的东西,则必须要返回presenter,如果不使用则不必返回
+3.列表页面的获取数据必须写在getData方法中,不然会出现错误,因为加载更多,点击重新加载都会调用这个方法
+4.使用插件生成结构的话,Activity必须要在清单文件中注册,不然爆找不到的异常
+5.utls的引用了一些库都是一些常用的库,如果不使用可以去除.
 
 
 
