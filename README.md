@@ -162,7 +162,7 @@ public class DemoActivity extends BaseActivity<DemoPresenter> implements IDemoCo
 
 ```
 
-#### 普通的列表页面,设置数据只要调用setDataList方法,其余的列表空数据界面,错误界面,错误界面重新加载都进行了相应的封装,不需要写太多的代码,都在内部进行了判断
+#### 普通的列表页面,设置数据只要调用setListData方法,其余的列表空数据界面,错误界面,错误界面重新加载都进行了相应的封装,不需要写太多的代码,都在内部进行了判断
 ```java
 public class DemoListActivity extends BaseListActivity<DemoPresenter, DemoAdapter> implements IDemoContract.View {
 
