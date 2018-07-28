@@ -8,9 +8,9 @@
 
 ```java
 public interface IView {
-
+    //普通错误回调
     void onError(StatusError msg);
-
+    //生命周期监测
     Lifecycle getLifecycle();
 
 }
@@ -21,17 +21,15 @@ public interface BaseView extends IView {
 }
 
 public interface BaseListView extends IView {
-
+    //列表加载错误
     void onErrorList(StatusError data);
-
+    //设置列表数据
     void setListData(List data);
-
+    //用于重置下拉刷新状态
     void setRefreshState();
 
 }
 ```
-
-#### M层 ![](https://github.com/wenbinAndroid/mvpdemo/blob/master/image/37962DEA-69DF-470B-8A16-F219D20F18C2.png)
 
 
 
