@@ -1,4 +1,4 @@
-### 分享下自己使用的mvp结构文件,里面还要一些常用工具;
+### 分享下自己使用的mvp结构文件,里面还有一些常用工具;
 
 #### 结构![MVP](https://github.com/wenbinAndroid/mvpdemo/blob/master/image/A74F0D09-C4F5-4959-80DB-56B5EFF29EF3.png)
 
