@@ -7,7 +7,7 @@ import com.blankj.utilcode.util.SPUtils;
 /**
  * @author Mrz
  * @date 2018/7/18 19:18
- *
+ * 管理当前登录状态和其他状态
  */
 
 public class LoginStateUtils {

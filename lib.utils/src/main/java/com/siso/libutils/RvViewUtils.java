@@ -27,12 +27,6 @@ public class RvViewUtils {
     private final static boolean OPEN_DEFAULT_EMPTYY_TEXT = true;
     private OnErrLoadingListener mListener;
     private static RvViewUtils mInstant;
-
-
-    private RvViewUtils() {
-
-    }
-
     public static RvViewUtils getInstant() {
         if (mInstant == null) {
             synchronized (RvViewUtils.class) {
@@ -43,6 +37,11 @@ public class RvViewUtils {
         }
         return mInstant;
     }
+
+    private RvViewUtils() {
+
+    }
+
 
     private static int getCommonEmptyLayout() {
         return R.layout.include_recyclerview_empty_view;
@@ -88,6 +87,7 @@ public class RvViewUtils {
         }
         return emptyView;
     }
+
 
 
     public View getErrView(Activity activity, RecyclerView rv) {
