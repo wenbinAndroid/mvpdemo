@@ -117,11 +117,54 @@ public abstract class BasePresenter<T extends IModel, V extends IView>
         if (getView() != null && getView().getLifecycle() != null) {
             getView().getLifecycle().removeObserver(this);
         }
-        Log.e(TAG, "detachView: ");
         mModel.onDestroy();
         mModel = null;
         mView = null;
     }
+```
+
+#### BaseActivity
+```java
+public abstract class BaseActivity<T extends IPresenter> extends
+        SisoActivity {
+
+    protected T mPresenter;
+
+    @Override
+    protected void initToolbar() {
+        setToolbar();
+    }
+
+    @Override
+    protected int setLayout() {
+        return onLayout();
+    }
+
+    @Override
+    protected void init() {
+        initData();
+    }
+
+    public abstract T createPresenter();
+
+    public abstract void setToolbar();
+
+    public abstract void initData();
+
+    public abstract int onLayout();
+    
+    @Override
+    protected void setLifecycleRegistry() {
+        mPresenter = createPresenter();
+        if (mPresenter != null) {
+        //回调生命周期到presenter
+            getLifecycle().addObserver(mPresenter);
+        }
+    }
+
+}
+
+
 ```
 
 
