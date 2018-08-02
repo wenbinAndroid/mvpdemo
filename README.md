@@ -9,10 +9,9 @@
 ```java
 
 public interface IModel {
-    //终止生命周期
+    //取消资源的调用
     void onDestroy();
-    //用于终止连接状态的tag,防止页面已经销毁还进行页面的刷新操作
-    void setTag(Object tag);
+   
 }
 
 public class BaseModel implements IModel {
