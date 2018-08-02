@@ -23,6 +23,11 @@ public class MainActivity extends BaseActivity {
     TextView mTvList;
 
     @Override
+    public void initView() {
+
+    }
+
+    @Override
     public IPresenter createPresenter() {
         return null;
     }

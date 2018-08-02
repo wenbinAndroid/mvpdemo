@@ -20,7 +20,6 @@ public abstract class BasePresenter<T extends IModel, V extends IView>
     public BasePresenter(V view) {
         this.mView = view;
         this.mModel = createModel();
-        mModel.setTag(view);
     }
 
     protected abstract T createModel();

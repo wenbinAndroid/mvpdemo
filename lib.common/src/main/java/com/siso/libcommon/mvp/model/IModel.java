@@ -8,5 +8,4 @@ public interface IModel {
 
     void onDestroy();
 
-    void setTag(Object tag);
 }

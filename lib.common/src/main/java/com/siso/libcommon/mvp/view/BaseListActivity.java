@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * @author Mrz
- * @date  2018/7/18 19:18
+ * @date 2018/7/18 19:18
  */
 
 public abstract class BaseListActivity<K extends IPresenter, V extends BaseQuickAdapter>
@@ -32,7 +32,7 @@ public abstract class BaseListActivity<K extends IPresenter, V extends BaseQuick
     protected boolean isOpenErrorView = true;
     //是否显示加载错误的信息提示
     protected boolean isShowLoadingErrorText = true;
-    //是否开启默认列表动画
+    //是否开启默认列表动画(如果有进行移除或者重新加载的情况会出现闪屏)
     protected boolean isOpenDefaultAnmation = true;
 
     @Override
@@ -54,7 +54,10 @@ public abstract class BaseListActivity<K extends IPresenter, V extends BaseQuick
     @Override
     protected void onResume() {
         super.onResume();
-        getData();
+        if (!isResumeFlag) {
+            isResumeFlag = true;
+            getData();
+        }
     }
 
     public abstract int onLayout();
@@ -62,14 +65,19 @@ public abstract class BaseListActivity<K extends IPresenter, V extends BaseQuick
     public abstract void initView();
 
     public abstract void setToolbar();
+
     //如果使用列表必须有返回值
     public abstract V getAdapter();
+
     //如果使用列表必须有返回值
     public abstract K getPresenter();
+
     //如果使用列表必须有返回值
     public abstract RecyclerView getRecycler();
+
     //用于下拉刷新view的状态改变
     public abstract void setRefreshState();
+
     //用于获取数据,加载更多和错误重新加载也是调用此接口
     public abstract void getData();
 

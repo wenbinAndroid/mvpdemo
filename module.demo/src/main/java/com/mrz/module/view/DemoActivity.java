@@ -17,6 +17,11 @@ import com.siso.libcommon.mvp.view.BaseActivity;
 public class DemoActivity extends BaseActivity<DemoPresenter> implements IDemoContract.View {
 
     @Override
+    public void initView() {
+
+    }
+
+    @Override
     public DemoPresenter createPresenter() {
         return new DemoPresenter(this);
     }

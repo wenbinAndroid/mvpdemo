@@ -4,7 +4,7 @@ import com.siso.libcommon.mvp.presenter.IPresenter;
 
 /**
  * @author Mrz
- * @date  2018/7/18 19:18
+ * @date 2018/7/18 19:18
  */
 
 public abstract class BaseActivity<T extends IPresenter> extends
@@ -24,8 +24,20 @@ public abstract class BaseActivity<T extends IPresenter> extends
 
     @Override
     protected void init() {
-        initData();
+        initView();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!isResumeFlag) {
+            isResumeFlag = true;
+            initData();
+        }
+    }
+
+    public abstract void initView();
+
 
     public abstract T createPresenter();
 
@@ -34,7 +46,6 @@ public abstract class BaseActivity<T extends IPresenter> extends
     public abstract void initData();
 
     public abstract int onLayout();
-
 
     @Override
     protected void setLifecycleRegistry() {

@@ -1,6 +1,5 @@
 package com.siso.libcommon.mvp.view;
 
-import android.arch.lifecycle.LifecycleOwner;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jaeger.library.StatusBarUtil;
-import com.lzy.okgo.OkGo;
 import com.siso.libcommon.R;
 import com.siso.libcommon.data.BaseEvent;
 import com.siso.libcommon.data.Config;
@@ -40,7 +38,7 @@ import butterknife.Unbinder;
 
 public abstract class SisoActivity extends AppCompatActivity
         implements BaseView, BaseListView,
-        RvViewUtils.OnErrLoadingListener, LifecycleOwner {
+        RvViewUtils.OnErrLoadingListener {
 
     protected Toolbar mToolbar;
     protected Context mContext;
@@ -62,6 +60,8 @@ public abstract class SisoActivity extends AppCompatActivity
     protected int mNextPager = 2;
     //当前选中
     protected int mCurrentSelectPosition = -1;
+    //
+    protected boolean isResumeFlag = false;
     private Unbinder mBind;
 
     protected void beforeInit(Bundle state) {
@@ -235,20 +235,19 @@ public abstract class SisoActivity extends AppCompatActivity
         mBind.unbind();
         EventBus.getDefault().unregister(this);
         ActivityUtils.removeActivity(this);
-        OkGo.getInstance().cancelTag(this);
         mContext = null;
     }
-
+    //列表加载错误
     @Override
     public void onErrorList(StatusError data) {
 
     }
-
+    //设置列表数据
     @Override
     public void setListData(List data) {
 
     }
-
+    //改变刷新状态
     @Override
     public void setRefreshState() {
 
