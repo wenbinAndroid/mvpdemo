@@ -63,6 +63,8 @@ public abstract class SisoActivity extends AppCompatActivity
     //
     protected boolean isResumeFlag = false;
     private Unbinder mBind;
+    //recycler其他视图管理器
+    private RvViewUtils mRvViewUtils;
 
     protected void beforeInit(Bundle state) {
 
@@ -206,7 +208,10 @@ public abstract class SisoActivity extends AppCompatActivity
      * @return
      */
     protected View getRvErrView(RecyclerView rv) {
-        return RvViewUtils.getInstant().setErrLoadingListener(this).getErrView(this, rv);
+        if (mRvViewUtils == null) {
+            mRvViewUtils = new RvViewUtils().setErrLoadingListener(this);
+        }
+        return mRvViewUtils.getErrView(this, rv);
     }
 
     /**
@@ -235,18 +240,24 @@ public abstract class SisoActivity extends AppCompatActivity
         mBind.unbind();
         EventBus.getDefault().unregister(this);
         ActivityUtils.removeActivity(this);
+        if (mRvViewUtils != null) {
+            mRvViewUtils.removelistener();
+        }
         mContext = null;
     }
+
     //列表加载错误
     @Override
     public void onErrorList(StatusError data) {
 
     }
+
     //设置列表数据
     @Override
     public void setListData(List data) {
 
     }
+
     //改变刷新状态
     @Override
     public void setRefreshState() {

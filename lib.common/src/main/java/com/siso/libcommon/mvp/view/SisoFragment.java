@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.jaeger.library.StatusBarUtil;
 import com.lzy.okgo.OkGo;
-import com.siso.libcommon.App;
 import com.siso.libcommon.data.BaseEvent;
 import com.siso.libcommon.data.StatusError;
 import com.siso.libutils.RvViewUtils;
@@ -50,6 +49,7 @@ public abstract class SisoFragment extends Fragment implements
     private TextView mTvTitle;
     protected boolean isLoadingSucceed;
     Unbinder unbinder;
+    private RvViewUtils mRvViewUtils;
 
     public abstract int setLayout();
 
@@ -150,7 +150,10 @@ public abstract class SisoFragment extends Fragment implements
     }
 
     protected View getRvErrView(RecyclerView rv) {
-        return RvViewUtils.getInstant().setErrLoadingListener(this).getErrView(mActivity, rv);
+        if (mRvViewUtils == null) {
+            mRvViewUtils = new RvViewUtils().setErrLoadingListener(this);
+        }
+        return mRvViewUtils.getErrView(mActivity, rv);
     }
 
     @Override
@@ -178,6 +181,9 @@ public abstract class SisoFragment extends Fragment implements
         unbinder.unbind();
         EventBus.getDefault().unregister(this);
         OkGo.getInstance().cancelTag(this);
+        if (mRvViewUtils != null) {
+            mRvViewUtils.removelistener();
+        }
         mActivity = null;
 
     }
