@@ -16,16 +16,10 @@ public interface IModel {
 
 public class BaseModel implements IModel {
     
-    protected Object tag;
-
-    @Override
-    public void setTag(Object tag) {
-        this.tag = tag;
-    }
-
+ 
     @Override
     public void onDestroy() {
-        tag = null;
+       
     }
 }
 ```
