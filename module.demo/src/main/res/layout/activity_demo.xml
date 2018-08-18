@@ -8,10 +8,17 @@
     android:orientation="vertical"
 >
     <include layout="@layout/common_toolbar"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:text="获取数据"
+        android:onClick="start"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content" />
     <TextView
         android:layout_width="match_parent"
         android:text="这是一个正常的界面"
         android:textSize="@dimen/sp_14"
+        android:id="@+id/tv"
         android:gravity="center"
         android:layout_height="match_parent" />
 </LinearLayout>

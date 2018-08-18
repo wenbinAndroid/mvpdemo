@@ -20,12 +20,12 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 #glide
--keepnames class com.siso.libcommon.imageloader.ImageLoaderConfig
+-keepnames class com.black.libcommon.imageloader.ImageLoaderConfig
 # or more generally:
 #-keep public class * implements com.bumptech.glide.module.GlideModule
 
 # for DexGuard only
 -keepresourcexmlelements manifest/application/meta-data@value=GlideModule
 
--keep class com.siso.libcommon.data
+-keep class com.black.libcommon.data
 
